@@ -1,7 +1,10 @@
 import axios from "axios";
 import fs from 'fs'
 import * as dotenv from 'dotenv'
-import path from 'path'
+import { fileURLToPath } from 'url'
+import path, { dirname } from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 dotenv.config()
 const [login, password, baseURL] = [
     process.env.TGB_API_LOGIN, 
