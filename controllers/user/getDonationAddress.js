@@ -38,7 +38,7 @@ const getDonationAddress = async (req, res) => {
                     city: city,
                     zipcode: zipcode
             }
-            data = Object.assign(data, ) 
+            data = Object.assign(data, addtionalDetails); 
         }
         const accessToken = await getAccessToken()
         const options = {
