@@ -1,6 +1,6 @@
 import axios from "axios";
 const baseURL = process.env.TGB_API_URL;
-import getAccessToken from "../../handlers/getAccessToken";
+import getAccessToken from "../../handlers/getAccessToken.js";
 
 const getDonationAddress = async (req, res) => {
     try {

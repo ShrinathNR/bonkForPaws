@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import getDonationAddress from "../../controllers/user/getDonationAddress";
+import getDonationAddress from "../../controllers/user/getDonationAddress.js";
 
 router.get('/', getDonationAddress);
 
