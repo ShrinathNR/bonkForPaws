@@ -14,7 +14,9 @@ import router from './routes/api.js'
 
 app.use('/api', router);
 
-const PORT = process.env.PORT || 4500;
+// const PORT = process.env.PORT || 4500;
+const PORT = 4500;
+
 
 app.listen(PORT, ()=> {
     console.log(`server is running on ${PORT}`);

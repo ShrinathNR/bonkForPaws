@@ -3,32 +3,11 @@ import fs from 'fs'
 import * as dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
+import getAccessToken from "./getAccessToken";
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 dotenv.config()
-const [login, password, baseURL] = [
-    process.env.TGB_API_LOGIN, 
-    process.env.TGB_API_PASSWORD, 
-    process.env.TGB_API_URL
-];
-
-const getAccessToken = async () => {
-    const postoptions = {
-        method: 'POST',
-        url: `${baseURL}/login`,
-        headers: {'Content-Type': 'application/json'},
-        data: {
-            login: login,
-            password: password
-        }
-    };   
-    try {
-        let accessToken = (await axios.request(postoptions)).data.data.accessToken;
-        return accessToken
-    } catch (error) {
-        console.log(error);
-    }
-}
+const baseURL = process.env.TGB_API_URL;
 
 const getAllOrganization = async (accessToken) => {
     const getoptions = {
