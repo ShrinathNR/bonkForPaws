@@ -66,7 +66,6 @@ const getAnimalCharities = async (organizations, accessToken, delayMs = 90) => {
 }
 
 const updateAnimalCharityListJson = async () => {
-    try {
         let accessToken = await getAccessToken();
         console.log(accessToken);
         let organizations = await getAllOrganization(accessToken);
@@ -83,10 +82,6 @@ const updateAnimalCharityListJson = async () => {
         fs.writeFile(absolute_filePath, jsonArray, 'utf8', (err)=> {
             console.log(err);  
         });
-    } catch (error) {
-        console.log(error);
-    }
-    
 }
 
 export default updateAnimalCharityListJson;

@@ -28,7 +28,7 @@ const getDonationAddress = async (req, res) => {
         }
 
         if (!isAnon){
-            addtionalDetails = {
+            let addtionalDetails = {
                     firstName: firstName,
                     lastName: lastName,
                     addressLine1: addressLine1,
@@ -40,6 +40,7 @@ const getDonationAddress = async (req, res) => {
             }
             data = Object.assign(data, addtionalDetails); 
         }
+        console.log(data);
         const accessToken = await getAccessToken()
         const options = {
             method: 'POST',

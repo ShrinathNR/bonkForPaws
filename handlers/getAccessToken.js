@@ -1,3 +1,7 @@
+import axios from "axios";
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 const [login, password, baseURL] = [
     process.env.TGB_API_LOGIN, 
     process.env.TGB_API_PASSWORD, 
