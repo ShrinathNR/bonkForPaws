@@ -13,18 +13,23 @@ const getAnimalCharityList = async (req, res) => {
             if(err) throw new Error(err.message);
             console.log("connection successful");
         });
-        
-        db.all('SELECT * FROM charity', (err, rows) => {
-            if(err) throw new Error(err.message);
-            res.status(200).json({
-                code: 200,
-                error: false,
-                charity: rows
-            })
-        })
+        const getAllCharity = () => {
+            return new Promise((resolve, reject) => {
+                db.all('SELECT * FROM charity', (err, rows) => {
+                    if (err) reject(err);
+                    resolve(rows);
+                });
+            });
+        };
+        let data  = await getAllCharity();
 
         db.close((err)=>{
             if(err) return console.log(err);
+        })
+        res.status(200).json({
+            code: 200,
+            error: false,
+            charity: data
         })
         
     } catch (error) {
