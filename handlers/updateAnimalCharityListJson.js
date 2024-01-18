@@ -8,6 +8,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 dotenv.config()
 const baseURL = process.env.TGB_API_URL;
+import sqlite3 from "sqlite3";
+sqlite3.verbose();
+const dbDirectory = __dirname+'./../db/bonk.db';
 
 const getAllOrganization = async (accessToken) => {
     const getoptions = {
@@ -50,11 +53,20 @@ const delay = (ms) => new Promise((resolve, reject) => {
 
 
 const getAnimalCharities = async (organizations, accessToken, delayMs = 90) => {
+    let db = new sqlite3.Database(dbDirectory, sqlite3.OPEN_READWRITE, (err)=> {
+        if(err) return console.log(err);
+        console.log("connection successful");
+    });
     const res = [];
     for (const org of organizations) {
         await delay(delayMs);
         const details = await getOrganizationById(org.id, accessToken);
         if (details.categories.some(itm => itm.id === 2)) {
+            db.run(`INSERT INTO charity(id, logo, name) VALUES(?,?,?)`,
+                [details.id, details.logo, details.name], (err)=>{
+                if(err) return console.log(err);
+                console.log(`${details.name} : row has been inserted`);
+            })
             res.push({
                 id: details.id,
                 logo: details.logo,
@@ -62,6 +74,10 @@ const getAnimalCharities = async (organizations, accessToken, delayMs = 90) => {
             })
         }
     }
+    console.log("inserted all the data");
+    db.close((err)=>{
+        if(err) return console.log(err);
+    })
     return res;
 }
 
