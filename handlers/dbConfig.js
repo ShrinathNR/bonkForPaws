@@ -6,10 +6,10 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename);
 const dbDirectory = __dirname+'./../db/bonk.db'
 
-let db = new sqlite3.Database(dbDirectory, sqlite3.OPEN_READWRITE, (err)=> {
-    if(err) return console.log(err);
-    console.log("connection successful");
-});
+// let db = new sqlite3.Database(dbDirectory, sqlite3.OPEN_READWRITE, (err)=> {
+//     if(err) return console.log(err);
+//     console.log("connection successful");
+// });
 
 // db.run('CREATE TABLE charity(id, logo, name)', (err) => {
 //     if(err) {
@@ -30,14 +30,14 @@ let db = new sqlite3.Database(dbDirectory, sqlite3.OPEN_READWRITE, (err)=> {
 //     console.log(`paws of honour : row has been inserted`);
 // })
 
-db.all('SELECT * FROM charity', (err, rows) => {
-    if (err) {
-      console.error('Error querying data:', err.message);
-      return;
-    }
-    console.log(rows.length);
-})
+// db.all('SELECT * FROM charity', (err, rows) => {
+//     if (err) {
+//       console.error('Error querying data:', err.message);
+//       return;
+//     }
+//     console.log(rows.length);
+// })
 
-db.close((err)=>{
-    if(err) return console.log(err);
-})
+// db.close((err)=>{
+//     if(err) return console.log(err);
+// })
