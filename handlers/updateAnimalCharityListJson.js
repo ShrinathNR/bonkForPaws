@@ -57,11 +57,38 @@ const getAnimalCharities = async (organizations, accessToken, delayMs = 90) => {
         if(err) return console.log(err);
         console.log("connection successful");
     });
+    const dropTable = () => {
+        return new Promise((resolve, reject) => {
+            db.run('DROP TABLE IF EXISTS charity', (err) => {
+                if(err) {
+                  console.error('Error dropping table:', err.message);
+                }
+                console.log('Table dropped successfully and new values are getting updated');
+                resolve();
+            });
+        });
+    };
+    const addCharityTable = () => {
+        return new Promise((resolve, reject) => {
+            db.run('CREATE TABLE charity(id, logo, name)', (err) => {
+                if(err) {
+                  console.error('Error creating table table:', err.message);
+                }
+                console.log('table animal charity created');
+                resolve();
+            })
+        });
+    };
+    
+
+    await dropTable();
+    await addCharityTable();
+    
     const res = [];
     for (const org of organizations) {
         await delay(delayMs);
         const details = await getOrganizationById(org.id, accessToken);
-        if (details.categories.some(itm => itm.id === 2)) {
+        if (details.categories.some(itm => itm.id === 2) && details.areCryptoDonationsEnabled) {
             db.run(`INSERT INTO charity(id, logo, name) VALUES(?,?,?)`,
                 [details.id, details.logo, details.name], (err)=>{
                 if(err) return console.log(err);
