@@ -40,6 +40,7 @@ const getDonationAddress = async (req, res) => {
             }
             data = Object.assign(data, addtionalDetails); 
         }
+
         const accessToken = await getAccessToken()
         const options = {
             method: 'POST',
@@ -50,14 +51,12 @@ const getDonationAddress = async (req, res) => {
             },
             data: data
         };
-        const donationAddress1 = (await axios.request(options)).data.data.depositAddress;
-        const donationAddress2 = (await axios.request(options)).data.data.depositAddress;
+        const donationAddress = (await axios.request(options)).data.data.depositAddress;
 
         res.status(200).json({
             code: 200,
             error: false,
-            donationAddress1 : donationAddress1,
-            donationAddress2 : donationAddress2
+            donationAddress : donationAddress
         })
         
     } catch (error) {
