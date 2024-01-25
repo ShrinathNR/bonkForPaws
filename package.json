@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@solana/web3.js": "^1.89.1",
     "axios": "^1.6.5",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
