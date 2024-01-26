@@ -70,9 +70,9 @@ const getAnimalCharities = async (organizations, accessToken, delayMs = 90) => {
     };
     const addCharityTable = () => {
         return new Promise((resolve, reject) => {
-            db.run('CREATE TABLE charity(id, logo, name)', (err) => {
+            db.run('CREATE TABLE charity(id, logo, name, allowsAnon, isReceiptEnabled)', (err) => {
                 if(err) {
-                  console.error('Error creating table table:', err.message);
+                  console.error('Error creating charity table:', err.message);
                 }
                 console.log('table animal charity created');
                 resolve();
@@ -88,16 +88,23 @@ const getAnimalCharities = async (organizations, accessToken, delayMs = 90) => {
     for (const org of organizations) {
         await delay(delayMs);
         const details = await getOrganizationById(org.id, accessToken);
+        
         if (details.categories.some(itm => itm.id === 2) && details.areCryptoDonationsEnabled) {
-            db.run(`INSERT INTO charity(id, logo, name) VALUES(?,?,?)`,
-                [details.id, details.logo, details.name], (err)=>{
+            console.log(`${details.name} : row has been inserted`);
+            const isReceiptEnabled = details.isReceiptEnabled ? details.isReceiptEnabled.toString() : "false";
+            db.run(`INSERT INTO charity(id, logo, name, allowsAnon, isReceiptEnabled) VALUES(?,?,?,?,?)`,
+                [details.id, details.logo, details.name, details.allowsAnon.toString(), isReceiptEnabled], (err)=>{
                 if(err) return console.log(err);
-                console.log(`${details.name} : row has been inserted`);
+                
+                
+
             })
             res.push({
                 id: details.id,
                 logo: details.logo,
-                name: details.name
+                name: details.name,
+                allowsAnon: details.allowsAnon,
+                isReceiptEnabled:isReceiptEnabled,
             })
         }
     }

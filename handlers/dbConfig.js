@@ -11,7 +11,7 @@ let db = new sqlite3.Database(dbDirectory, sqlite3.OPEN_READWRITE, (err)=> {
     console.log("connection successful");
 });
 
-// db.run('CREATE TABLE charity(id, logo, name)', (err) => {
+// db.run('CREATE TABLE charity(id, logo, name, allowsAnon, isReceiptEnabled)', (err) => {
 //     if(err) {
 //       console.error('Error creating table table:', err.message);
 //     }
@@ -25,17 +25,18 @@ let db = new sqlite3.Database(dbDirectory, sqlite3.OPEN_READWRITE, (err)=> {
 //     console.log('Table dropped successfully');
 // })
 
-// db.run(`INSERT INTO charity(id, logo, name) VALUES(?,?,?)`,[1189133714, "https://static.tgbwidget.com/organization_logo/e8b4f975-1d82-48c7-8dde-8aa9fa73dd3d.jpg", "Paws of Honor, Inc."], (err)=>{
+// db.run(`INSERT INTO charity(id, logo, name, allowsAnon, isReceiptEnabled) VALUES(?,?,?,?,?)`,[1189133714, "https://static.tgbwidget.com/organization_logo/e8b4f975-1d82-48c7-8dde-8aa9fa73dd3d.jpg", "Paws of Honor, Inc.", false, true], (err)=>{
 //     if(err) return console.log(err);
 //     console.log(`paws of honour : row has been inserted`);
 // })
+
 
 db.all('SELECT * FROM charity', (err, rows) => {
     if (err) {
       console.error('Error querying data:', err.message);
       return;
     }
-    console.log(rows.length);
+    console.log(rows);
 })
 
 db.close((err)=>{

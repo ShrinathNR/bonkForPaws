@@ -716,19 +716,21 @@ const match_finalise = async () => {
         const fromAmount = parseInt(matchDonationState.account.donationAmount.toString())/LAMPORTS_PER_SOL;
         const charityWallet2 = matchDonationState.account.matchKey.toBase58();
         const matchDonationStatepub = matchDonationState.publicKey.toBase58();
-        delay(1000);
+        delay(3000);
+        const data = {
+          fromAmount:fromAmount,
+          charityWallet2:charityWallet2,
+          matchDonationState:matchDonationStatepub
+      }
         const postoptions = {
             method: 'POST',
             url: "http://localhost:3000/api/matchFinaliseIx",
             headers: {'Content-Type': 'application/json'},
-            data: {
-                fromAmount:fromAmount,
-                charityWallet2:charityWallet2,
-                matchDonationState:matchDonationStatepub
-            }
+            data: data
         };
+        console.log(data);
         const res = (await axios.request(postoptions));
-        console.log(res);
+        console.log(await res.json());
         
     }
 
@@ -736,17 +738,17 @@ const match_finalise = async () => {
 }
 match_finalise()
 
-// // cron schedule (every 1 hour)
-// const cronSchedule = '0 * * * *';
+// cron schedule (every 1 hour)
+const cronSchedule = '0 */6 * * *';
 
-// // Create the cron job
-// const job = new CronJob(cronSchedule, async function() {
-//   console.log('updating the stored animal realted charity list...');
-//   await match_finalise();
-// });
+// Create the cron job
+const job = new CronJob(cronSchedule, async function() {
+  console.log('updating the stored animal realted charity list...');
+  await match_finalise();
+});
 
-// // Start the cron job
-// job.start();
+// Start the cron job
+job.start();
 
-// console.log(`Cron job scheduled with "${cronSchedule}"`);
+console.log(`Cron job scheduled with "${cronSchedule}"`);
 

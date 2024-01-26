@@ -24,11 +24,11 @@ const getDonationAddress = async (req, res) => {
             isAnonymous: isAnon,
             pledgeCurrency: pledgeCurrency,
             pledgeAmount: pledgeAmount,
-            receiptEmail: receiptEmail,
         }
 
         if (!isAnon){
             let addtionalDetails = {
+                    receiptEmail: receiptEmail,
                     firstName: firstName,
                     lastName: lastName,
                     addressLine1: addressLine1,
