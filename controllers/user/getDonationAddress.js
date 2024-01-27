@@ -6,7 +6,8 @@ const getDonationAddress = async (req, res) => {
     try {
         const {
             organizationId, 
-            isAnon, 
+            isAnon,
+            wantReceipt, 
             pledgeCurrency, 
             pledgeAmount,
             receiptEmail,
@@ -27,8 +28,7 @@ const getDonationAddress = async (req, res) => {
         }
 
         if (!isAnon){
-            let addtionalDetails = {
-                    receiptEmail: receiptEmail,
+            let userDetails = {
                     firstName: firstName,
                     lastName: lastName,
                     addressLine1: addressLine1,
@@ -38,8 +38,10 @@ const getDonationAddress = async (req, res) => {
                     city: city,
                     zipcode: zipcode
             }
-            data = Object.assign(data, addtionalDetails); 
+            data = Object.assign(data, userDetails); 
         }
+        if(wantReceipt) data.receiptEmail = receiptEmail;
+        console.log(data);
 
         const accessToken = await getAccessToken()
         const options = {
